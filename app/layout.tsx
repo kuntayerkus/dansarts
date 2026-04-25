@@ -1,0 +1,53 @@
+import type { Metadata, Viewport } from "next";
+import { Cinzel, Inter } from "next/font/google";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
+import "./globals.css";
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-serif",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "DANS ARTS · Reyhan Şafak — Hareketin En Asil Hali",
+  description:
+    "İzmir'in eksklüzif Latin dans atölyesi. Reyhan Şafak öncülüğünde özel ders ve masterclass deneyimi.",
+  metadataBase: new URL("https://dansarts.com"),
+  openGraph: {
+    title: "DANS ARTS · Reyhan Şafak",
+    description: "Hareketin En Asil Hali. İzmir'in eksklüzif Latin dans evi.",
+    type: "website",
+    locale: "tr_TR",
+  },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0A0A0A",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="tr" className={`${cinzel.variable} ${inter.variable}`}>
+      <body className="bg-background text-text antialiased overflow-x-hidden">
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+      </body>
+    </html>
+  );
+}
