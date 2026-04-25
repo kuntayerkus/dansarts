@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import ScrubScene from "./ScrubScene";
 import ScrollIndicator from "./ScrollIndicator";
+import MobileNav from "./MobileNav";
 
 /**
  * Hero — "The Hook"
@@ -70,7 +71,7 @@ export default function Hero() {
                   Öncü
                 </a>
                 <a href="#deneyim" className="hover:text-accent transition-colors">
-                  Deneyim
+                  Sahne
                 </a>
                 <a
                   href="#basvuru"
@@ -79,6 +80,15 @@ export default function Hero() {
                   Başvuru
                 </a>
               </motion.nav>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: ready ? 1 : 0 }}
+                transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+                className="md:hidden"
+              >
+                <MobileNav />
+              </motion.div>
             </header>
 
             {/* Centerpiece headline */}

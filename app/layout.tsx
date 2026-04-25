@@ -20,13 +20,20 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "DANS ARTS · Reyhan Şafak — Hareketin En Asil Hali",
   description:
-    "İzmir'in eksklüzif Latin dans atölyesi. Reyhan Şafak öncülüğünde özel ders ve masterclass deneyimi.",
+    "İzmir merkezli, Reyhan Şafak öncülüğünde Latin danslarının zarafetini sahnede yeniden yorumlayan eksklüzif bir atölye.",
   metadataBase: new URL("https://dansarts.com"),
+  alternates: { canonical: "/" },
   openGraph: {
     title: "DANS ARTS · Reyhan Şafak",
     description: "Hareketin En Asil Hali. İzmir'in eksklüzif Latin dans evi.",
     type: "website",
     locale: "tr_TR",
+    siteName: "Dans Arts",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DANS ARTS · Reyhan Şafak",
+    description: "Hareketin En Asil Hali. İzmir'in eksklüzif Latin dans evi.",
   },
   robots: { index: true, follow: true },
 };

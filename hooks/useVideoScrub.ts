@@ -53,6 +53,9 @@ export default function useVideoScrub({
 }: VideoScrubOptions): VideoScrubState {
   const [ready, setReady] = useState(false);
   const [progress, setProgress] = useState(0);
+  // Bumped whenever the desktop/mobile breakpoint flips so the bootstrap
+  // effect re-runs with the correct frame folder.
+  const [variantKey, setVariantKey] = useState(0);
 
   const framesRef = useRef<HTMLImageElement[]>([]);
   const currentIndexRef = useRef(-1);
@@ -229,16 +232,14 @@ export default function useVideoScrub({
       resizeCanvas();
       const next = pickVariant();
       if (next.variant !== lastVariant) {
-        // Variant flipped — re-bootstrap by remounting the effect.
         lastVariant = next.variant;
-        // Force re-init via state bump
         setReady(false);
-        // Trigger reload by clearing frames
         framesRef.current = [];
-        // The simplest correct path: reload the page section by re-running
-        // the effect on next frame. We do this by toggling a key upstream;
-        // here we simply re-call bootstrap inline.
-        // (Kept simple: in practice the breakpoint flip is rare.)
+        currentIndexRef.current = -1;
+        // Bump the key so the effect re-runs with the new variant; the
+        // cleanup below will cancel the in-flight loads from this run.
+        setVariantKey((k) => k + 1);
+        return;
       }
       drawFrame(currentIndexRef.current);
     };
@@ -264,6 +265,7 @@ export default function useVideoScrub({
     requestTick,
     resizeCanvas,
     priorityCount,
+    variantKey,
   ]);
 
   return { ready, progress };
