@@ -55,10 +55,15 @@ const config: Config = {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
         },
+        marquee: {
+          "0%": { transform: "translate3d(0, 0, 0)" },
+          "100%": { transform: "translate3d(-50%, 0, 0)" },
+        },
       },
       animation: {
         breathe: "breathe 2.6s ease-in-out infinite",
         shimmer: "shimmer 6s linear infinite",
+        marquee: "marquee 38s linear infinite",
       },
     },
   },

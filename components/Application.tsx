@@ -1,40 +1,118 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import MagneticButton from "./MagneticButton";
 
 const easing = [0.16, 1, 0.3, 1] as const;
 const RECIPIENT = "dansartsreyhan@gmail.com";
 
-/**
- * Application — "The Application"
- * Bölüm 05. Minimalist, underlined inputs. On submit, opens the user's
- * email client via mailto to RECIPIENT with the form contents pre-filled.
- */
+type Mode = "lesson" | "event";
+
+interface FieldDef {
+  name: string;
+  label: string;
+  type: "text" | "email" | "tel" | "date" | "select" | "textarea";
+  required?: boolean;
+  fullWidth?: boolean;
+  options?: string[];
+}
+
+const lessonFields: FieldDef[] = [
+  { name: "name", label: "Ad Soyad", type: "text", required: true },
+  { name: "email", label: "E-posta", type: "email", required: true },
+  { name: "phone", label: "Telefon (opsiyonel)", type: "tel" },
+  {
+    name: "level",
+    label: "Deneyim Seviyesi",
+    type: "select",
+    options: ["Başlangıç", "Orta", "İleri", "Belirsiz"],
+  },
+  {
+    name: "message",
+    label: "Mesajınız",
+    type: "textarea",
+    required: true,
+    fullWidth: true,
+  },
+];
+
+const eventFields: FieldDef[] = [
+  { name: "name", label: "Ad Soyad / Şirket", type: "text", required: true },
+  { name: "email", label: "E-posta", type: "email", required: true },
+  { name: "phone", label: "Telefon", type: "tel", required: true },
+  {
+    name: "eventType",
+    label: "Etkinlik Türü",
+    type: "select",
+    options: ["Düğün", "Lansman", "Festival", "Gala", "Workshop", "Diğer"],
+    required: true,
+  },
+  { name: "eventDate", label: "Tarih (opsiyonel)", type: "date" },
+  { name: "venue", label: "Mekan / Şehir", type: "text", required: true },
+  {
+    name: "audience",
+    label: "Kitle Büyüklüğü",
+    type: "select",
+    options: ["50–", "50–150", "150–500", "500+"],
+  },
+  {
+    name: "budget",
+    label: "Bütçe Aralığı (opsiyonel)",
+    type: "select",
+    options: ["Belirtmek istemiyorum", "Düşük", "Orta", "Üst"],
+  },
+  {
+    name: "message",
+    label: "Brief / Mesaj",
+    type: "textarea",
+    required: true,
+    fullWidth: true,
+  },
+];
+
+const labelByName: Record<string, string> = {
+  name: "Ad Soyad / Şirket",
+  email: "E-posta",
+  phone: "Telefon",
+  level: "Deneyim Seviyesi",
+  eventType: "Etkinlik Türü",
+  eventDate: "Tarih",
+  venue: "Mekan / Şehir",
+  audience: "Kitle Büyüklüğü",
+  budget: "Bütçe Aralığı",
+  message: "Mesaj",
+};
+
 export default function Application() {
+  const [mode, setMode] = useState<Mode>("lesson");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+
+  const fields = mode === "lesson" ? lessonFields : eventFields;
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
-    const name = String(data.get("name") || "").trim();
-    const email = String(data.get("email") || "").trim();
-    const phone = String(data.get("phone") || "").trim();
-    const message = String(data.get("message") || "").trim();
 
-    const subject = `Özel Deneyime Başvuru — ${name || "İsimsiz"}`;
-    const body = [
-      `Ad Soyad: ${name}`,
-      `E-posta: ${email}`,
-      phone ? `Telefon: ${phone}` : null,
-      "",
-      "Mesaj:",
-      message,
-    ]
-      .filter(Boolean)
-      .join("\n");
+    const lines: string[] = [];
+    for (const f of fields) {
+      const v = String(data.get(f.name) || "").trim();
+      if (!v) continue;
+      if (f.type === "textarea") {
+        lines.push("", `${labelByName[f.name] || f.label}:`, v);
+      } else {
+        lines.push(`${labelByName[f.name] || f.label}: ${v}`);
+      }
+    }
+
+    const who = String(data.get("name") || "").trim() || "İsimsiz";
+    const subject =
+      mode === "lesson"
+        ? `Özel Ders Talebi — ${who}`
+        : `Etkinlik Brief'i — ${who}`;
+    const body = lines.join("\n");
 
     const href = `mailto:${RECIPIENT}?subject=${encodeURIComponent(
       subject
@@ -96,7 +174,7 @@ export default function Application() {
           className="mt-10 mx-auto max-w-xl text-center text-text/75 text-sm md:text-base font-light leading-[1.85]"
         >
           Dans Arts'ın atölye kapısı, davete açık ölçülü bir kapıdır.
-          Aşağıdaki kısa formu doldurun; sizinle bizzat iletişime geçelim.
+          İhtiyacınızı seçin; sizinle bizzat iletişime geçelim.
         </motion.p>
 
         {done ? (
@@ -117,64 +195,124 @@ export default function Application() {
             <div className="gold-rule h-px w-24 mx-auto mt-10" />
           </motion.div>
         ) : (
-          <motion.form
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 1.5, ease: easing, delay: 0.5 }}
-            onSubmit={onSubmit}
-            className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10"
-            noValidate={false}
-          >
-            <Field name="name" label="Ad Soyad" type="text" required />
-            <Field name="email" label="E-posta" type="email" required />
-            <Field
-              name="phone"
-              label="Telefon (opsiyonel)"
-              type="tel"
-              required={false}
-            />
-            <Field
-              name="message"
-              label="Mesajınız"
-              type="textarea"
-              required
-              fullWidth
-            />
+          <>
+            {/* Mode switch */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 1.4, ease: easing, delay: 0.45 }}
+              role="tablist"
+              aria-label="Başvuru türü"
+              className="mt-16 mx-auto inline-flex items-stretch divide-x divide-line/60 border border-line/60 bg-surface/60"
+            >
+              <ModeTab
+                active={mode === "lesson"}
+                onClick={() => setMode("lesson")}
+                label="Özel Ders"
+                helper="Birebir / küçük grup"
+              />
+              <ModeTab
+                active={mode === "event"}
+                onClick={() => setMode("event")}
+                label="Etkinlik Brief'i"
+                helper="Sahne / gala / workshop"
+              />
+            </motion.div>
 
-            <div className="md:col-span-2 flex flex-col items-center gap-6 mt-4">
-              <button
-                type="submit"
-                disabled={submitting}
-                className="group inline-flex items-center gap-4 border border-accent/50 px-10 py-4 text-[11px] uppercase tracking-whisper text-accent transition-colors duration-700 hover:bg-accent hover:text-background disabled:opacity-50 disabled:cursor-not-allowed"
+            <AnimatePresence mode="wait">
+              <motion.form
+                key={mode}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.9, ease: easing }}
+                onSubmit={onSubmit}
+                className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10"
+                noValidate={false}
               >
-                <span>{submitting ? "Gönderiliyor" : "Özel Deneyime Başvur"}</span>
-                <span className="block h-px w-8 bg-accent/60 transition-all duration-700 group-hover:w-12 group-hover:bg-background" />
-              </button>
-              <p className="text-[10px] uppercase tracking-whisper text-text/40 text-center">
-                Başvurunuz {RECIPIENT} adresine yönlendirilir.
-              </p>
-            </div>
-          </motion.form>
+                {fields.map((f) => (
+                  <Field key={`${mode}-${f.name}`} field={f} />
+                ))}
+
+                <div className="md:col-span-2 flex flex-col items-center gap-6 mt-4">
+                  <MagneticButton
+                    type="submit"
+                    disabled={submitting}
+                    strength={10}
+                    className="group inline-flex items-center gap-4 border border-accent/50 px-10 py-4 text-[11px] uppercase tracking-whisper text-accent transition-colors duration-700 hover:bg-accent hover:text-background disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <span>
+                      {submitting
+                        ? "Gönderiliyor"
+                        : mode === "lesson"
+                        ? "Ders Talebi Gönder"
+                        : "Brief'i Gönder"}
+                    </span>
+                    <span className="block h-px w-8 bg-accent/60 transition-all duration-700 group-hover:w-12 group-hover:bg-background" />
+                  </MagneticButton>
+
+                  <p className="text-[10px] uppercase tracking-whisper text-text/40 text-center max-w-md leading-relaxed">
+                    {mode === "event"
+                      ? "Brief alındıktan sonra size dönüp portfolyo / referans dosyalarınızı e-posta ile rica edeceğiz."
+                      : `Başvurunuz ${RECIPIENT} adresine yönlendirilir.`}
+                  </p>
+                </div>
+              </motion.form>
+            </AnimatePresence>
+          </>
         )}
       </div>
     </section>
   );
 }
 
-interface FieldProps {
-  name: string;
+function ModeTab({
+  active,
+  onClick,
+  label,
+  helper,
+}: {
+  active: boolean;
+  onClick: () => void;
   label: string;
-  type: "text" | "email" | "tel" | "textarea";
-  required?: boolean;
-  fullWidth?: boolean;
+  helper: string;
+}) {
+  return (
+    <button
+      type="button"
+      role="tab"
+      aria-selected={active}
+      onClick={onClick}
+      className={`group relative flex flex-col items-start gap-1 px-6 py-4 md:px-10 md:py-5 text-left transition-colors duration-700 ${
+        active
+          ? "bg-background text-text"
+          : "text-text/60 hover:text-text"
+      }`}
+    >
+      <span className="text-[10px] uppercase tracking-whisper text-accent/80">
+        {helper}
+      </span>
+      <span className="serif text-lg md:text-xl font-light tracking-tight">
+        {label}
+      </span>
+      <span
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-x-0 bottom-0 h-px bg-accent transition-transform duration-700 origin-left ${
+          active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-50"
+        }`}
+      />
+    </button>
+  );
 }
 
-function Field({ name, label, type, required, fullWidth }: FieldProps) {
+function Field({ field }: { field: FieldDef }) {
+  const { name, label, type, required, fullWidth, options } = field;
   const id = `f-${name}`;
-  const isTextarea = type === "textarea";
+  const wrapperClass = fullWidth ? "md:col-span-2" : "";
+
   return (
-    <div className={fullWidth ? "md:col-span-2" : ""}>
+    <div className={wrapperClass}>
       <label
         htmlFor={id}
         className="block text-[10px] uppercase tracking-whisper text-text/60 mb-3"
@@ -182,7 +320,8 @@ function Field({ name, label, type, required, fullWidth }: FieldProps) {
         {label}
         {required && <span className="text-accent ml-1">·</span>}
       </label>
-      {isTextarea ? (
+
+      {type === "textarea" ? (
         <textarea
           id={id}
           name={name}
@@ -190,6 +329,23 @@ function Field({ name, label, type, required, fullWidth }: FieldProps) {
           rows={4}
           className="input-line w-full bg-transparent text-text placeholder:text-text/30 text-base font-light py-2 resize-none"
         />
+      ) : type === "select" ? (
+        <select
+          id={id}
+          name={name}
+          required={required}
+          defaultValue=""
+          className="input-line w-full bg-transparent text-text text-base font-light py-2 cursor-pointer appearance-none"
+        >
+          <option value="" disabled className="bg-background text-text/60">
+            Seçiniz
+          </option>
+          {options?.map((opt) => (
+            <option key={opt} value={opt} className="bg-background text-text">
+              {opt}
+            </option>
+          ))}
+        </select>
       ) : (
         <input
           id={id}
@@ -197,7 +353,7 @@ function Field({ name, label, type, required, fullWidth }: FieldProps) {
           type={type}
           required={required}
           autoComplete={
-            type === "email" ? "email" : type === "tel" ? "tel" : "name"
+            type === "email" ? "email" : type === "tel" ? "tel" : undefined
           }
           className="input-line w-full bg-transparent text-text placeholder:text-text/30 text-base font-light py-2"
         />

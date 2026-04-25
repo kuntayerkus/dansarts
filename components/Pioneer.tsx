@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import WordReveal from "./WordReveal";
 
 const easing = [0.16, 1, 0.3, 1] as const;
 
@@ -51,32 +52,21 @@ export default function Pioneer() {
               className="gold-rule h-px w-32 md:w-48 mt-10 md:mt-14 origin-left"
             />
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 0.85, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 1.5, ease: easing, delay: 0.5 }}
-              className="dropcap mt-10 md:mt-14 max-w-xl text-text/80 text-base md:text-lg font-light leading-[1.85]"
-            >
-              İzmir merkezli bir öncü; Latin danslarının zarafetini sahnede
-              yeniden yorumlayan bir imza. Yarışma pistlerinden uluslararası
-              workshop salonlarına uzanan yolculuğunda, her hareketi titiz bir
-              estetik anlayışıyla biçimlendirir. Reyhan Şafak için dans, bir
-              gösteriden çok bir duruş — sahnenin önünde geçirilmiş yılların
-              sessiz bir ifadesi.
-            </motion.p>
+            <WordReveal
+              as="p"
+              text="İzmir merkezli bir öncü; Latin danslarının zarafetini sahnede yeniden yorumlayan bir imza. Yarışma pistlerinden uluslararası workshop salonlarına uzanan yolculuğunda, her hareketi titiz bir estetik anlayışıyla biçimlendirir. Reyhan Şafak için dans, bir gösteriden çok bir duruş — sahnenin önünde geçirilmiş yılların sessiz bir ifadesi."
+              stagger={0.025}
+              delay={0.4}
+              className="dropcap mt-10 md:mt-14 max-w-xl text-text/85 text-base md:text-lg font-light leading-[1.85]"
+            />
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 0.7, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 1.5, ease: easing, delay: 0.7 }}
+            <WordReveal
+              as="p"
+              text="Dans Arts, onun vizyonu etrafında şekillenen bir atölye: davete açık, ölçülü, prestijli. Sıradan bir kurs değil — bir yaşam tarzının zarif bir uzantısı."
+              stagger={0.03}
+              delay={0.2}
               className="mt-8 max-w-xl text-text/70 text-base md:text-lg font-light leading-[1.85]"
-            >
-              Dans Arts, onun vizyonu etrafında şekillenen bir atölye:
-              davete açık, ölçülü, prestijli. Sıradan bir kurs değil — bir
-              yaşam tarzının zarif bir uzantısı.
-            </motion.p>
+            />
           </div>
 
           {/* Right: vertical letterpress + portrait placeholder */}
