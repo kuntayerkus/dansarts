@@ -15,9 +15,9 @@ export default function Hero() {
   return (
     <ScrubScene
       id="hero"
-      sequence="girl"
-      desktopFrameCount={603}
-      mobileFrameCount={301}
+      src="/assets/videos/slow-latin-girl.mp4"
+      poster="/assets/videos/poster-girl.webp"
+      eager
       scrollLength={3.5}
       vignette={0.6}
     >

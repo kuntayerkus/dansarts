@@ -13,9 +13,8 @@ export default function Atmosphere() {
   return (
     <ScrubScene
       id="atmosfer"
-      sequence="shoe"
-      desktopFrameCount={603}
-      mobileFrameCount={301}
+      src="/assets/videos/slow-latin-shoes.mp4"
+      poster="/assets/videos/poster-shoes.webp"
       scrollLength={3.5}
       vignette={0.7}
     >
