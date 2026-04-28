@@ -74,19 +74,18 @@ export default function PageProgress() {
 
   return (
     <div
-      aria-hidden="true"
-      className="hidden md:block fixed right-5 lg:right-7 top-1/2 -translate-y-1/2 z-30 h-[40vh] w-px"
+      className="hidden md:block fixed right-0 top-1/2 -translate-y-1/2 z-30 h-[40vh]"
     >
-      {/* Track */}
+      {/* Track line */}
       <span
         aria-hidden="true"
-        className="absolute inset-y-0 right-0 w-px bg-line/80"
+        className="absolute right-5 lg:right-7 inset-y-0 w-px bg-line/80"
       />
 
       {/* Gold fill — scales with document progress */}
       <span
         aria-hidden="true"
-        className="absolute top-0 right-0 w-px bg-accent origin-top"
+        className="absolute right-5 lg:right-7 top-0 w-px bg-accent origin-top"
         style={{
           height: "100%",
           transform: `scaleY(${progress.toFixed(4)})`,
@@ -104,20 +103,20 @@ export default function PageProgress() {
               key={s.id}
               onClick={() => handleJump(s.id)}
               aria-label={`${s.label} bölümüne git`}
-              className="group absolute right-0 -translate-y-1/2 flex items-center gap-3 cursor-pointer"
+              className="group absolute right-0 -translate-y-1/2 flex items-center pl-3 pr-7 lg:pr-9 py-2 cursor-pointer"
               style={{ top: `${top}%` }}
             >
               <span
-                className={`text-[9px] uppercase tracking-whisper transition-all duration-700 ease-couture whitespace-nowrap ${
+                className={`text-[9px] uppercase tracking-whisper transition-all duration-500 ease-couture whitespace-nowrap mr-3 ${
                   active
-                    ? "text-accent opacity-90 translate-x-0"
-                    : "text-text/45 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"
+                    ? "text-accent opacity-90"
+                    : "text-text/45 opacity-0 translate-x-1 group-hover:opacity-100 group-hover:translate-x-0"
                 }`}
               >
                 {s.label}
               </span>
               <span
-                className={`block h-px transition-all duration-700 ease-couture ${
+                className={`block h-px flex-shrink-0 transition-all duration-500 ease-couture ${
                   active
                     ? "w-4 bg-accent"
                     : "w-2 bg-text/40 group-hover:w-3 group-hover:bg-accent/70"
