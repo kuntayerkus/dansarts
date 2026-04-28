@@ -76,8 +76,8 @@ export default function ScrubScene({
         {/* Loading veil — dissolves once first frame is decoded */}
         <div
           aria-hidden="true"
-          className={`absolute inset-0 bg-background transition-opacity duration-1500 ease-couture ${
-            ready ? "opacity-0 pointer-events-none" : "opacity-100"
+          className={`absolute inset-0 bg-background transition-opacity duration-1500 ease-couture pointer-events-none ${
+            ready ? "opacity-0" : "opacity-100"
           }`}
         />
 
@@ -92,8 +92,10 @@ export default function ScrubScene({
 
         {/* Overlay copy */}
         {children && (
-          <div className="relative z-10 h-full w-full">
-            {children({ ready, progress })}
+          <div className="relative z-10 h-full w-full pointer-events-none">
+            <div className="pointer-events-auto h-full w-full">
+              {children({ ready, progress })}
+            </div>
           </div>
         )}
       </div>
