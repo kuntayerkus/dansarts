@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "DANS ARTS · Reyhan Şafak — Hareketin En Asil Hali";
+export const alt = "DANS ARTS · Stüdyomuz Yok. Sahnemiz Var.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -31,24 +31,24 @@ export default async function OpengraphImage() {
             marginBottom: 40,
           }}
         >
-          Reyhan Şafak · İzmir
+          Reyhan Şafak · TDSF 2. Kademe Antrenör
         </div>
 
         <div
           style={{
-            fontSize: 96,
-            lineHeight: 1.05,
+            fontSize: 92,
+            lineHeight: 1.04,
             textAlign: "center",
             fontWeight: 400,
             letterSpacing: -1,
           }}
         >
-          Hareketin
+          Stüdyomuz Yok.
         </div>
         <div
           style={{
-            fontSize: 96,
-            lineHeight: 1.05,
+            fontSize: 92,
+            lineHeight: 1.04,
             textAlign: "center",
             fontWeight: 400,
             letterSpacing: -1,
@@ -56,7 +56,7 @@ export default async function OpengraphImage() {
             fontStyle: "italic",
           }}
         >
-          En Asil Hali
+          Sahnemiz Var.
         </div>
 
         <div
@@ -71,11 +71,28 @@ export default async function OpengraphImage() {
 
         <div
           style={{
+            display: "flex",
+            gap: 48,
+            marginTop: 40,
+            color: "#F2EDE4",
+            opacity: 0.78,
+            fontSize: 16,
+            letterSpacing: 4,
+            textTransform: "uppercase",
+          }}
+        >
+          <span>İzmir · 1995'ten Bu Yana</span>
+          <span style={{ color: "#D4AF37" }}>·</span>
+          <span>32 Yıl · 10.000+ Öğrenci</span>
+        </div>
+
+        <div
+          style={{
             fontSize: 18,
             letterSpacing: 10,
             textTransform: "uppercase",
             color: "#D4AF37",
-            marginTop: 40,
+            marginTop: 36,
           }}
         >
           DANS ARTS

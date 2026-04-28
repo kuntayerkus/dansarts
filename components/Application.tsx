@@ -7,7 +7,7 @@ import MagneticButton from "./MagneticButton";
 const easing = [0.16, 1, 0.3, 1] as const;
 const RECIPIENT = "dansartsreyhan@gmail.com";
 
-type Mode = "lesson" | "event";
+type Mode = "lesson" | "event" | "venue";
 
 interface FieldDef {
   name: string;
@@ -22,6 +22,19 @@ const lessonFields: FieldDef[] = [
   { name: "name", label: "Ad Soyad", type: "text", required: true },
   { name: "email", label: "E-posta", type: "email", required: true },
   { name: "phone", label: "Telefon (opsiyonel)", type: "tel" },
+  {
+    name: "branch",
+    label: "İlgilendiğiniz Branş",
+    type: "select",
+    options: [
+      "Sportif Latin",
+      "Ballroom (Salon)",
+      "Salsa / Bachata",
+      "Arjantin Tango",
+      "Düğün Dansı",
+      "Belirsiz",
+    ],
+  },
   {
     name: "level",
     label: "Deneyim Seviyesi",
@@ -45,7 +58,14 @@ const eventFields: FieldDef[] = [
     name: "eventType",
     label: "Etkinlik Türü",
     type: "select",
-    options: ["Düğün", "Lansman", "Festival", "Gala", "Workshop", "Diğer"],
+    options: [
+      "Düğün / İlk Dans",
+      "Wine Night / Gala",
+      "Masterclass",
+      "Lansman",
+      "Festival",
+      "Diğer",
+    ],
     required: true,
   },
   { name: "eventDate", label: "Tarih (opsiyonel)", type: "date" },
@@ -71,16 +91,64 @@ const eventFields: FieldDef[] = [
   },
 ];
 
+const venueFields: FieldDef[] = [
+  { name: "name", label: "İletişim Kişisi", type: "text", required: true },
+  { name: "company", label: "Mekan / Marka Adı", type: "text", required: true },
+  { name: "email", label: "E-posta", type: "email", required: true },
+  { name: "phone", label: "Telefon", type: "tel", required: true },
+  {
+    name: "venueType",
+    label: "Mekan Profili",
+    type: "select",
+    options: [
+      "Lüks Otel",
+      "Butik Şarap Evi",
+      "Lobi Bar",
+      "Roof-top",
+      "Restaurant / Brasserie",
+      "Kültürel Mekan",
+      "Diğer",
+    ],
+    required: true,
+  },
+  { name: "city", label: "Şehir / Bölge", type: "text", required: true },
+  { name: "capacity", label: "Yaklaşık Kapasite (kişi)", type: "text" },
+  {
+    name: "model",
+    label: "İlgilendiğiniz Model",
+    type: "select",
+    options: [
+      "I. F&B Taahhüdü",
+      "II. Gelir Paylaşımı",
+      "III. Yıllık Sponsorluk",
+      "Henüz emin değilim",
+    ],
+  },
+  {
+    name: "message",
+    label: "Mekan ve Beklentilerinize Dair Notlar",
+    type: "textarea",
+    required: true,
+    fullWidth: true,
+  },
+];
+
 const labelByName: Record<string, string> = {
-  name: "Ad Soyad / Şirket",
+  name: "İletişim Kişisi",
+  company: "Mekan / Marka",
   email: "E-posta",
   phone: "Telefon",
+  branch: "Branş",
   level: "Deneyim Seviyesi",
   eventType: "Etkinlik Türü",
   eventDate: "Tarih",
   venue: "Mekan / Şehir",
   audience: "Kitle Büyüklüğü",
   budget: "Bütçe Aralığı",
+  venueType: "Mekan Profili",
+  city: "Şehir / Bölge",
+  capacity: "Kapasite",
+  model: "İlgilenilen Model",
   message: "Mesaj",
 };
 
@@ -89,7 +157,12 @@ export default function Application() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
 
-  const fields = mode === "lesson" ? lessonFields : eventFields;
+  const fields =
+    mode === "lesson"
+      ? lessonFields
+      : mode === "event"
+      ? eventFields
+      : venueFields;
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -111,7 +184,9 @@ export default function Application() {
     const subject =
       mode === "lesson"
         ? `Özel Ders Talebi — ${who}`
-        : `Etkinlik Brief'i — ${who}`;
+        : mode === "event"
+        ? `Etkinlik Brief'i — ${who}`
+        : `Mekan Partnerliği — ${who}`;
     const body = lines.join("\n");
 
     const href = `mailto:${RECIPIENT}?subject=${encodeURIComponent(
@@ -126,10 +201,24 @@ export default function Application() {
     }, 800);
   };
 
+  const submitLabel =
+    mode === "lesson"
+      ? "Ders Talebi Gönder"
+      : mode === "event"
+      ? "Brief'i Gönder"
+      : "Partnerlik Brief'i Gönder";
+
+  const helperText =
+    mode === "venue"
+      ? "Brief alındıktan sonra mekan ziyareti ve özel sunum için tarafınıza döneceğiz."
+      : mode === "event"
+      ? "Brief alındıktan sonra size dönüp portfolyo / referans dosyalarınızı e-posta ile rica edeceğiz."
+      : `Başvurunuz ${RECIPIENT} adresine yönlendirilir.`;
+
   return (
     <section
       id="basvuru"
-      className="relative bg-background py-32 md:py-48 overflow-hidden"
+      className="relative bg-background py-32 md:py-48 overflow-hidden border-t border-line/40"
     >
       <div className="mx-auto max-w-3xl px-6">
         <motion.div
@@ -141,7 +230,7 @@ export default function Application() {
         >
           <span className="block h-px w-8 bg-accent/60" />
           <span className="text-[10px] uppercase tracking-whisper text-accent/70">
-            Bölüm 05 · Başvuru
+            Bölüm 08 · Başvuru
           </span>
           <span className="block h-px w-8 bg-accent/60" />
         </motion.div>
@@ -153,9 +242,9 @@ export default function Application() {
           transition={{ duration: 1.6, ease: easing }}
           className="serif font-light leading-[1.05] text-text tracking-tight text-center text-[40px] md:text-[64px] lg:text-[80px]"
         >
-          Özel Deneyime
+          Sahnemizi
           <br />
-          <em className="not-italic gold-shimmer animate-shimmer">Başvur</em>.
+          <em className="not-italic gold-shimmer animate-shimmer">paylaşalım</em>.
         </motion.h2>
 
         <motion.div
@@ -173,8 +262,8 @@ export default function Application() {
           transition={{ duration: 1.5, ease: easing, delay: 0.4 }}
           className="mt-10 mx-auto max-w-xl text-center text-text/75 text-sm md:text-base font-light leading-[1.85]"
         >
-          Dans Arts'ın atölye kapısı, davete açık ölçülü bir kapıdır.
-          İhtiyacınızı seçin; sizinle bizzat iletişime geçelim.
+          Davete açık ölçülü bir kapı. İhtiyacınızı seçin — özel ders, sahne
+          gösterisi ya da mekan ortaklığı — size bizzat dönelim.
         </motion.p>
 
         {done ? (
@@ -196,7 +285,7 @@ export default function Application() {
           </motion.div>
         ) : (
           <>
-            {/* Mode switch */}
+            {/* Mode switch — three tabs */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -204,7 +293,7 @@ export default function Application() {
               transition={{ duration: 1.4, ease: easing, delay: 0.45 }}
               role="tablist"
               aria-label="Başvuru türü"
-              className="mt-16 mx-auto inline-flex items-stretch divide-x divide-line/60 border border-line/60 bg-surface/60"
+              className="mt-16 mx-auto grid grid-cols-1 sm:grid-cols-3 sm:divide-x sm:divide-line/60 divide-y sm:divide-y-0 divide-line/60 border border-line/60 bg-surface/60"
             >
               <ModeTab
                 active={mode === "lesson"}
@@ -216,7 +305,13 @@ export default function Application() {
                 active={mode === "event"}
                 onClick={() => setMode("event")}
                 label="Etkinlik Brief'i"
-                helper="Sahne / gala / workshop"
+                helper="Sahne · gala · workshop"
+              />
+              <ModeTab
+                active={mode === "venue"}
+                onClick={() => setMode("venue")}
+                label="Mekan Partnerliği"
+                helper="Otel · şarap evi · roof-top"
               />
             </motion.div>
 
@@ -242,20 +337,12 @@ export default function Application() {
                     strength={10}
                     className="group inline-flex items-center gap-4 border border-accent/50 px-10 py-4 text-[11px] uppercase tracking-whisper text-accent transition-colors duration-700 hover:bg-accent hover:text-background disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <span>
-                      {submitting
-                        ? "Gönderiliyor"
-                        : mode === "lesson"
-                        ? "Ders Talebi Gönder"
-                        : "Brief'i Gönder"}
-                    </span>
+                    <span>{submitting ? "Gönderiliyor" : submitLabel}</span>
                     <span className="block h-px w-8 bg-accent/60 transition-all duration-700 group-hover:w-12 group-hover:bg-background" />
                   </MagneticButton>
 
                   <p className="text-[10px] uppercase tracking-whisper text-text/40 text-center max-w-md leading-relaxed">
-                    {mode === "event"
-                      ? "Brief alındıktan sonra size dönüp portfolyo / referans dosyalarınızı e-posta ile rica edeceğiz."
-                      : `Başvurunuz ${RECIPIENT} adresine yönlendirilir.`}
+                    {helperText}
                   </p>
                 </div>
               </motion.form>
@@ -284,10 +371,8 @@ function ModeTab({
       role="tab"
       aria-selected={active}
       onClick={onClick}
-      className={`group relative flex flex-col items-start gap-1 px-6 py-4 md:px-10 md:py-5 text-left transition-colors duration-700 ${
-        active
-          ? "bg-background text-text"
-          : "text-text/60 hover:text-text"
+      className={`group relative flex flex-col items-start gap-1 px-6 py-4 md:px-8 md:py-5 text-left transition-colors duration-700 ${
+        active ? "bg-background text-text" : "text-text/60 hover:text-text"
       }`}
     >
       <span className="text-[10px] uppercase tracking-whisper text-accent/80">

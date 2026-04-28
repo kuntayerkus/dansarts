@@ -2,8 +2,12 @@
 # Hedef: Exclusive Lead Generation & Prestij Markalaması
 # Teknik Çekirdek: Next.js + Lenis + HTMLVideoElement Scrubbing (hardware-decoded)
 
-## 1. Marka Vizyonu ve Konumlandırma
-Dans Arts, İzmir'in Latin danslarındaki öncü ismi **Reyhan Şafak**'ın "Eksklüzif" (Exclusive) eğitmenliği etrafında şekillenen premium bir dijital markadır. Sıradan bir dans kursu değil, elit bir yaşam tarzı sunar. Sitenin amacı doğrudan satış yapmak değil, yüksek kaliteli görsel bir deneyim sunarak prestijli başvurular (lead) toplamaktır.
+## 1. Marka Vizyonu ve Konumlandırma (Brand Strategy v2 — 2026)
+Dans Arts, İzmir'in Latin danslarındaki öncü ismi **Reyhan Şafak** (TDSF 2. Kademe Antrenör · 32 yıllık tecrübe · 10.000+ öğrenci) etrafında şekillenen premium bir dijital markadır.
+
+**Yeni konumlandırma:** *"Stüdyomuz Yok. Sahnemiz Var."* — sabit stüdyo modeli yerine İzmir'in en seçkin sahneleriyle (lüks oteller, butik şarap evleri, lobi barlar, roof-top'lar) kurulan partnership programı. Site hem **bireysel öğrenci/çift lead'i** hem de **mekan ortaklığı brief'i** topluyor.
+
+Sıradan bir dans kursu değil; "her sınıf yalnızca bir kez yaşanır" felsefesinin dijital vitrini.
 
 ## 2. Tasarım Sistemi (Premium UI/UX)
 - **Tema:** Ultra-minimalist, karanlık mod (dark mode). "Az ama öz" felsefesi.
@@ -46,18 +50,22 @@ ffmpeg -i public/assets/videos/yeni-video.mp4 \
 ffprobe -v error -select_streams v:0 -show_entries packet=flags -of csv video.mp4 | findstr /c:"K_" | find /c "K_"
 ```
 
-## 4. Sayfa Mimarisi ve Akış
-1. **Hero Section (The Hook):** - `girl` sekansı Canvas üzerinde çalışır. Sayfa kaydıkça video pürüzsüzce ilerler. 
-   - Başlangıçta karanlık bir overlay vardır. Scroll ettikçe overlay hafifler ve "Reyhan Şafak - Hareketin En Asil Hali" metni zarifçe belirir.
-   - Alt kısımda `framer-motion` ile animasyonlu, minimalist bir "Sanatı Keşfetmek İçin Kaydırın" (Scroll Indicator) çizgisi bulunur.
-2. **Detay / Atmosfer Section:** - `shoe` sekansı devreye girer. Ayak hareketlerine odaklanan bu kısımda, karanlık ve prestijli bir atmosfer yaratılır. Üzerine "Adımlarınızla İzi Bırakın" gibi premium metinler biner.
-3. **The Pioneer (Reyhan Şafak):** - Vogue dergisi kalitesinde bir düzen (Asimetrik grid veya bol whitespace). Reyhan Şafak'ın sektördeki öncü konumu anlatan elit metinler.
-4. **Boutique Experiences (Eğitimler):** - Özel Dersler ve Masterclass eğitimlerinin zarif bir listelemesi.
-5. **The Application (Lead Form):** - Altı çizgili, minimalist inputlar. "Bize Ulaşın" değil, "Özel Deneyime Başvur". Bu form ileride bir webhook (n8n) ile bağlanacak şekilde modüler tasarlanmalıdır.
+## 4. Sayfa Mimarisi ve Akış (8 bölüm — Brand Strategy v2)
+1. **Bölüm 01 · Hero / Manifesto (`#hero`):** `girl` videosu üzerinde "Stüdyomuz Yok. Sahnemiz Var." manifesto başlığı. Heritage stat row (10.000+ öğrenci · 32 yıl · TDSF 2. Kademe).
+2. **Bölüm 02 · Manifesto / Atmosfer (`#manifesto`):** `shoes` videosu. "Adres değil, bir Deneyim" — venue rotation copy (Karşıyaka terası, Alsancak butik şarap evi, Çeşme lobi bar). Sahne adı: İzmir.
+3. **Bölüm 03 · Öncü (`#oncu`):** Reyhan Şafak portresi + tam biyografi (1994 İngiltere → bugün). 6 timeline kartı: Crawley, İzmir Dönüş, Ege Konservatuarı, Dans Arts Ortaklık, Türkiye 1.liği, TDSF 2. Kademe.
+4. **Bölüm 04 · Uluslararası Vizyon (`#vizyon`):** Festivaller (Buenos Aires, Sofya, Yunta Brava, Ankara), birlikte çalışılan tango efsaneleri & latin ustaları, öne çıkan sahneler (Hilton Viyana, AKM vs.).
+5. **PressMarquee:** Sahnedeki imzalar — gerçek venue/festival listesi, sonsuz horizontal strip.
+6. **Bölüm 05 · Sahne · Repertuvar (`#sahne`):** Üç sütun (Sportif Latin / Ballroom / Sosyal Danslar) + destekleyici repertuvar (Club Cha Cha, La Rueda, Two Step, Line Dance, Oryantal, Modern altyapı).
+7. **Bölüm 06 · Boutique Experiences (`#deneyim`):** 6 hizmet paketi — VIP Düğün (feature), Wine Night (feature), Özel Ders, Butik Grup, Masterclass, Yıllık Sponsorluk.
+8. **Bölüm 07 · Partnership & Venue Program (`#partnerlik`):** 5 mekan kazanımı (Premium Klientel, Düşük Sezon, Sinematik İçerik, Marka Yükseltme, Çapraz Pazarlama) + 3 ortaklık modeli (F&B Taahhüdü, Gelir Paylaşımı, Yıllık Sponsorluk) + CTA strip.
+9. **Bölüm 08 · Başvuru (`#basvuru`):** 3-mode form (Özel Ders / Etkinlik Brief / Mekan Partnerliği). mailto-relay; ileride webhook'a bağlanacak.
+10. **Footer:** Kapanış manifesto, 5 kişilik ekip (Reyhan, Uğur, Kuntay, Seçkin, Deniz), nav, iletişim.
 
 ## 5. AI Developer (Claude Code) İçin Kesin Talimatlar
 1. **Teknoloji Yığını:** Sadece `next`, `tailwindcss`, `framer-motion`, `lenis`, ve ikonlar için `lucide-react` kullan. Gereksiz paket kurma.
 2. **Performans (LCP):** Hero sahnesi `eager` ile preload edilir; Atmosfer (ve sonraki video sahneler) `IntersectionObserver` ile viewport'a 1vh kala lazy yüklenir. Poster image'lar açılışta siyah ekran riskini sıfırlar.
 3. **Hook (`useVideoScrub`):** `HTMLVideoElement` + Lenis scroll progress + scroll-velocity döndürür. `velocity` çıktısı `ScrubScene`'de cinematic motion blur'a beslenir (max 2.4px). Yarı-frame'den küçük `currentTime` yazımları Safari jitter için elenir.
 4. **Copywriting:** Uygulama içinde ASLA *Lorem Ipsum* veya "Dummy Text" kullanma. Markanın "Eksklüzif" ve "Lüks" vizyonuna uygun, yaratıcı Türkçe metinler (copywriting) yazarak komponentleri doldur.
-5. **Sağ kenar PageProgress:** 1px altın hat + 5 bölüm tick'i; aktif bölüm IntersectionObserver ile belirlenir. Sadece desktop.
+5. **Sağ kenar PageProgress:** 1px altın hat + 7 bölüm tick'i (Manifesto, Öncü, Vizyon, Sahne, Deneyim, Partnerlik, Başvuru); aktif bölüm IntersectionObserver ile belirlenir. Sadece desktop.
+6. **Brand strategy kaynağı:** `C:\Users\kunta\Masaüstü\DANS-ARTS\DansArts_Marka_Strateji_Raporu.pdf` — 9 sayfalık partnership & venue program belgesi (2026). Yeni copy/section eklerken bu kaynaktaki kelime, fakta ve istatistiklere sadık kal: 1995 başlangıç, 32 yıl tecrübe, 10.000+ öğrenci, TDSF 2. Kademe, 2008 Türkiye 1.liği, Hilton Viyana Balosu vb.

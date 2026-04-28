@@ -4,15 +4,14 @@ import { motion } from "framer-motion";
 import ScrubScene from "./ScrubScene";
 
 /**
- * Atmosphere — "The Step"
- * - Shoe frame sequence.
- * - Asymmetric editorial copy enters & exits with scroll progress.
- * - Tonally heavier vignette to feel like a closed atelier.
+ * Atmosphere — "Sahnemiz: İzmir"
+ * Translates the brand thesis: each evening is a different elite venue.
+ * Roof-tops · butik şarap evleri · lobi barlar · lüks oteller.
  */
 export default function Atmosphere() {
   return (
     <ScrubScene
-      id="atmosfer"
+      id="manifesto"
       src="/assets/videos/slow-latin-shoes.mp4"
       poster="/assets/videos/poster-shoes.webp"
       scrollLength={3.5}
@@ -30,7 +29,6 @@ export default function Atmosphere() {
 
         return (
           <>
-            {/* Editorial section label — always-on, top-left */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: ready ? 1 : 0 }}
@@ -39,21 +37,21 @@ export default function Atmosphere() {
             >
               <span className="block h-px w-8 bg-accent/60" />
               <span className="text-[10px] uppercase tracking-whisper text-accent/70">
-                Bölüm 02 · Atmosfer
+                Bölüm 02 · Manifesto
               </span>
             </motion.div>
 
-            {/* Asymmetric headline */}
+            {/* Headline */}
             <div
               className="absolute inset-0 flex items-end md:items-center px-6 md:px-16 pb-24 md:pb-0"
               style={{ opacity: headlineOpacity }}
             >
               <div className="max-w-2xl md:ml-[8%]">
                 <p className="text-[10px] uppercase tracking-whisper text-accent/70 mb-5 md:mb-7">
-                  Adımlarınızla
+                  Adres değil
                 </p>
-                <h2 className="serif font-light text-text leading-[1.05] text-[40px] md:text-[72px] lg:text-[88px] tracking-tight">
-                  İz Bırakın.
+                <h2 className="serif font-light text-text leading-[1.0] text-[40px] md:text-[72px] lg:text-[92px] tracking-tight">
+                  Bir <em className="not-italic italic text-accent">Deneyim.</em>
                 </h2>
                 <div
                   className="gold-rule h-px w-24 md:w-32 mt-7 md:mt-9"
@@ -63,23 +61,24 @@ export default function Atmosphere() {
                   className="mt-7 md:mt-9 text-text/75 text-sm md:text-base font-light leading-relaxed max-w-md"
                   style={{ opacity: subOpacity }}
                 >
-                  Salsa'nın nabzı, bachata'nın kalp atışı, kizomba'nın
-                  fısıltısı… Her adım bir imza. Her duruş, sahnenin önünde
-                  geçirilmiş yılların sessiz bir ifadesi.
+                  Bir akşam Karşıyaka'nın saklı bir terasında, bir başka akşam
+                  Alsancak'ın bir butik şarap evinde, bir başka akşam ise
+                  Çeşme'nin lüks bir lobi barında. Her sınıf, her gece — yalnızca
+                  bir kez yaşanır, yaşayan unutmaz.
                 </p>
               </div>
             </div>
 
-            {/* Bottom-right closing — appears at the end */}
+            {/* Bottom-right closing */}
             <div
               className="absolute bottom-10 md:bottom-14 right-6 md:right-12 max-w-xs text-right"
               style={{ opacity: closingOpacity }}
             >
               <p className="text-[10px] uppercase tracking-whisper text-accent/80 mb-3">
-                Bir sonraki bölüm
+                Sahnemizin adı
               </p>
-              <p className="serif text-text text-lg md:text-xl font-light leading-snug">
-                Öncünün hikayesi.
+              <p className="serif text-text text-2xl md:text-3xl font-light leading-snug italic">
+                İzmir.
               </p>
             </div>
           </>

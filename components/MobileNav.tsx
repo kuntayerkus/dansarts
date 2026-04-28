@@ -7,9 +7,12 @@ import { Menu, X } from "lucide-react";
 const easing = [0.16, 1, 0.3, 1] as const;
 
 const links = [
-  { href: "#atmosfer", label: "Atmosfer" },
+  { href: "#manifesto", label: "Manifesto" },
   { href: "#oncu", label: "Öncü" },
-  { href: "#deneyim", label: "Sahne" },
+  { href: "#vizyon", label: "Uluslararası Vizyon" },
+  { href: "#sahne", label: "Sahne · Repertuvar" },
+  { href: "#deneyim", label: "Boutique Experiences" },
+  { href: "#partnerlik", label: "Partnerlik" },
   { href: "#basvuru", label: "Başvuru" },
 ];
 
@@ -61,7 +64,7 @@ export default function MobileNav() {
               </button>
             </div>
 
-            <nav className="flex flex-col items-center justify-center h-full -mt-16 gap-10">
+            <nav className="flex flex-col items-center justify-center h-full -mt-12 gap-7">
               {links.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -72,9 +75,9 @@ export default function MobileNav() {
                   transition={{
                     duration: 0.9,
                     ease: easing,
-                    delay: 0.1 + i * 0.08,
+                    delay: 0.08 + i * 0.06,
                   }}
-                  className="serif font-light text-text text-3xl tracking-tight hover:text-accent transition-colors"
+                  className="serif font-light text-text text-2xl tracking-tight hover:text-accent transition-colors"
                 >
                   {link.label}
                 </motion.a>

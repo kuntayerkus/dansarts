@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 
 const sections = [
-  { id: "hero", label: "Asalet" },
-  { id: "atmosfer", label: "Atmosfer" },
+  { id: "hero", label: "Manifesto" },
   { id: "oncu", label: "Öncü" },
-  { id: "deneyim", label: "Sahne" },
-  { id: "basvuru", label: "Davet" },
+  { id: "vizyon", label: "Vizyon" },
+  { id: "sahne", label: "Sahne" },
+  { id: "deneyim", label: "Deneyim" },
+  { id: "partnerlik", label: "Partnerlik" },
+  { id: "basvuru", label: "Başvuru" },
 ];
 
 /**
