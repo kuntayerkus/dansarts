@@ -10,7 +10,6 @@ import Footer from "@/components/Footer";
 import IntroLoader from "@/components/IntroLoader";
 import CursorTrail from "@/components/CursorTrail";
 import StickyCTA from "@/components/StickyCTA";
-import PageProgress from "@/components/PageProgress";
 
 export default function HomePage() {
   return (
@@ -29,7 +28,6 @@ export default function HomePage() {
         <Footer />
       </main>
       <StickyCTA />
-      <PageProgress />
     </>
   );
 }
