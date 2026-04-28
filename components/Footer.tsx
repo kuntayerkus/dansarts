@@ -1,6 +1,7 @@
 import { Instagram, Mail } from "lucide-react";
 
 const navLinks = [
+  { href: "#manifesto", label: "Atmosfer" },
   { href: "#oncu", label: "Öncü" },
   { href: "#vizyon", label: "Uluslararası Vizyon" },
   { href: "#sahne", label: "Sahne · Repertuvar" },
@@ -28,7 +29,7 @@ export default function Footer() {
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-10 items-start">
           {/* Brand */}
-          <div className="md:col-span-6">
+          <div className="md:col-span-5">
             <p className="serif text-accent text-2xl tracking-editorial">
               DANS&nbsp;ARTS
             </p>
@@ -69,7 +70,7 @@ export default function Footer() {
           </div>
 
           {/* Navigation */}
-          <div className="md:col-span-3 md:col-start-8">
+          <div className="md:col-span-3 md:col-start-7">
             <p className="text-[10px] uppercase tracking-whisper text-accent/70 mb-5">
               Bölümler
             </p>
@@ -88,7 +89,7 @@ export default function Footer() {
           </div>
 
           {/* Heritage stat */}
-          <div className="md:col-span-3">
+          <div className="md:col-span-3 md:col-start-10">
             <p className="text-[10px] uppercase tracking-whisper text-accent/70 mb-5">
               Miras
             </p>

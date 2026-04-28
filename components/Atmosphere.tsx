@@ -37,7 +37,7 @@ export default function Atmosphere() {
             >
               <span className="block h-px w-8 bg-accent/60" />
               <span className="text-[10px] uppercase tracking-whisper text-accent/70">
-                Bölüm 02 · Manifesto
+                Bölüm 02 · Atmosfer
               </span>
             </motion.div>
 

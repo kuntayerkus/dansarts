@@ -170,7 +170,7 @@ export default function Application() {
         >
           <span className="block h-px w-8 bg-accent/60" />
           <span className="text-[10px] uppercase tracking-whisper text-accent/70">
-            Bölüm 08 · Başvuru
+            Bölüm 07 · Başvuru
           </span>
           <span className="block h-px w-8 bg-accent/60" />
         </motion.div>

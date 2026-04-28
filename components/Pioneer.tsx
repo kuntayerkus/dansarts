@@ -107,7 +107,7 @@ export default function Pioneer() {
               text="İzmir'in köklü dans kültürünün yapı taşlarından biri. 1994'ten bu yana 32 yılı aşan tecrübesi ve uluslararası vizyonuyla, Türkiye Dans Sporları Federasyonu 2. Kademe Antrenör unvanını taşıyan sayılı dans ustalarından. Kariyeri boyunca on binden fazla öğrenciye dans eğitimi verdi; Ballroom, Sportif Latin, Sosyal Latin ve Arjantin Tango branşlarında derin bir uzmanlık geliştirdi."
               stagger={0.022}
               delay={0.4}
-              className="dropcap mt-10 md:mt-14 max-w-xl text-text/85 text-base md:text-lg font-light leading-[1.85]"
+              className="mt-10 md:mt-14 max-w-xl text-text/85 text-base md:text-lg font-light leading-[1.85]"
             />
 
             <WordReveal

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 const sections = [
   { id: "hero", label: "Manifesto" },
+  { id: "manifesto", label: "Atmosfer" },
   { id: "oncu", label: "Öncü" },
   { id: "vizyon", label: "Vizyon" },
   { id: "sahne", label: "Sahne" },
@@ -15,7 +16,7 @@ const sections = [
  * PageProgress
  * --------------------------------------------------------
  * Whisper-quiet right-edge indicator: a 1px gold rule that fills
- * with document progress, with five tick marks for the sections.
+ * with document progress, plus a tick mark per content section.
  * Click a tick to scroll. Active section's tick brightens.
  * Desktop only.
  */

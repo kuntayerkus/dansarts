@@ -23,16 +23,11 @@ export default function Hero() {
     >
       {({ ready, progress }) => {
         const veilOpacity = Math.max(0, Math.min(1, 1 - progress / 0.18));
+        // Manifesto headline must be at full opacity on landing — it's the
+        // brand statement. We only fade it OUT as the user scrolls past 0.55.
         const titleOpacity = Math.max(
           0,
-          Math.min(
-            1,
-            progress < 0.05
-              ? progress / 0.05
-              : progress > 0.55
-              ? 1 - (progress - 0.55) / 0.2
-              : 1
-          )
+          Math.min(1, progress > 0.55 ? 1 - (progress - 0.55) / 0.2 : 1)
         );
 
         return (
