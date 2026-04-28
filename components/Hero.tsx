@@ -38,7 +38,7 @@ export default function Hero() {
               style={{ opacity: veilOpacity * 0.55 }}
             />
 
-            <header className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 md:px-12 pt-8 md:pt-10">
+            <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 pt-8 md:pt-10 pointer-events-auto">
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: ready ? 1 : 0, y: ready ? 0 : -10 }}
