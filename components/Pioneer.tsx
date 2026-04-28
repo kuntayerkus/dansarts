@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import WordReveal from "./WordReveal";
 
@@ -136,39 +137,44 @@ export default function Pioneer() {
 
           {/* Right: portrait placeholder + stat trio */}
           <div className="col-span-12 md:col-span-5 md:pt-16">
-            <motion.div
+            <motion.figure
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10%" }}
               transition={{ duration: 1.8, ease: easing, delay: 0.3 }}
-              className="relative aspect-[3/4] w-full max-w-md mx-auto md:ml-auto md:mr-0 bg-surface border border-line/60"
+              className="relative aspect-[3/4] w-full max-w-md mx-auto md:ml-auto md:mr-0 bg-surface border border-line/60 overflow-hidden"
             >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="serif text-accent/40 text-[clamp(72px,14vw,160px)] tracking-editorial select-none">
-                  R · Ş
-                </span>
-              </div>
+              <Image
+                src="/assets/REYHANHERO.png"
+                alt="Reyhan Şafak — TDSF 2. Kademe Antrenör portresi"
+                fill
+                sizes="(min-width: 768px) 32rem, 100vw"
+                priority={false}
+                className="object-cover object-center"
+              />
 
-              <div className="absolute inset-x-0 top-0 p-6 flex items-center justify-between">
-                <span className="text-[10px] uppercase tracking-whisper text-accent/70">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-background/30"
+              />
+
+              <figcaption className="absolute inset-x-0 top-0 p-6 flex items-center justify-between">
+                <span className="text-[10px] uppercase tracking-whisper text-accent/80">
                   Sahne 01
                 </span>
-                <span className="text-[10px] uppercase tracking-whisper text-text/40">
+                <span className="text-[10px] uppercase tracking-whisper text-text/55">
                   İzmir 2026
                 </span>
-              </div>
+              </figcaption>
 
-              <div className="absolute inset-x-0 bottom-0 p-6 flex items-center justify-between">
-                <span className="text-[10px] uppercase tracking-whisper text-text/50">
-                  Portre
-                </span>
-                <span className="text-[10px] uppercase tracking-whisper text-accent/70">
-                  Yakında
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <span className="text-[10px] uppercase tracking-whisper text-accent/80">
+                  Reyhan Şafak · Portre
                 </span>
               </div>
 
-              <div className="pointer-events-none absolute inset-0 ring-1 ring-accent/10" />
-            </motion.div>
+              <div className="pointer-events-none absolute inset-0 ring-1 ring-accent/15" />
+            </motion.figure>
 
             <motion.div
               initial={{ opacity: 0 }}

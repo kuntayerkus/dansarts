@@ -56,14 +56,6 @@ const experiences: Experience[] = [
     audience: "İleri öğrenciler · Yarışmacılar",
     copy: "TDSF antrenörü gözetiminde ileri seviye teknik ve yarışma hazırlığı.",
   },
-  {
-    index: "06",
-    name: "Yıllık Mekan",
-    italic: "Sponsorluğu",
-    duration: "12 ay",
-    audience: "Lüks oteller · Premium markalar",
-    copy: "Yıllık etkinlik takvimi, içerik paketi ve co-brand iletişim. Kurumsal ölçekli stratejik ortaklık.",
-  },
 ];
 
 /**
@@ -110,9 +102,9 @@ export default function BoutiqueExperiences() {
             transition={{ duration: 1.5, ease: easing, delay: 0.3 }}
             className="col-span-12 md:col-span-5 md:pt-8 max-w-md text-text/75 text-sm md:text-base font-light leading-[1.85]"
           >
-            Düğün dansından roof-top wine night'a, masterclass'tan kurumsal
-            sponsorluğa — her hat, mekan profilinize ve etkinlik formatınıza
-            özel olarak yapılandırılır.
+            Düğün dansından roof-top wine night'a, özel dersten masterclass'a —
+            her hat, kişisel hedeflerinize ve etkinlik formatınıza özel olarak
+            yapılandırılır.
           </motion.p>
         </div>
 
@@ -125,8 +117,8 @@ export default function BoutiqueExperiences() {
             ))}
         </ul>
 
-        {/* Standard experiences (2x2 grid) */}
-        <ul className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line/60 border-x border-b border-line/60">
+        {/* Standard experiences (3 columns) */}
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line/60 border-x border-b border-line/60">
           {experiences
             .filter((e) => !e.feature)
             .map((exp, i) => (
@@ -142,7 +134,7 @@ export default function BoutiqueExperiences() {
           transition={{ duration: 1.4, ease: easing, delay: 0.3 }}
           className="mt-10 md:mt-14 text-center text-[10px] uppercase tracking-whisper text-text/45"
         >
-          Yatırım kalemleri · Mekan profili ve etkinlik kapsamına göre özel olarak yapılandırılır.
+          Yatırım kalemleri · Etkinlik kapsamına ve hedeflerinize göre özel olarak yapılandırılır.
         </motion.p>
       </div>
     </section>

@@ -1,14 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 const easing = [0.16, 1, 0.3, 1] as const;
+
+const youtubeSearch = (query: string) =>
+  `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
 
 interface Festival {
   index: string;
   name: string;
   city: string;
   year: string;
+  href: string;
 }
 
 const festivals: Festival[] = [
@@ -17,54 +22,80 @@ const festivals: Festival[] = [
     name: "II. World Tango Festivali",
     city: "Buenos Aires · Arjantin",
     year: "2003",
+    href: youtubeSearch("World Tango Festival Buenos Aires 2003"),
   },
   {
     index: "II.",
     name: "Bulgaristan Salsa Kongresi",
     city: "Sofya · Bulgaristan",
     year: "2006",
+    href: youtubeSearch("Bulgaria Salsa Congress Sofia"),
   },
   {
     index: "III.",
     name: "Yunta Brava Tango Festivalleri",
     city: "Bodrum · Çeşme",
     year: "2007–2008",
+    href: youtubeSearch("Yunta Brava Tango Festival"),
   },
   {
     index: "IV.",
     name: "I. Uluslararası Ankara Tango Festivali",
     city: "Ankara",
     year: "2009",
+    href: youtubeSearch("Uluslararası Ankara Tango Festivali"),
   },
 ];
 
 interface Stage {
   name: string;
   detail: string;
+  href: string;
 }
 
 const stages: Stage[] = [
-  { name: "Hilton Viyana Balosu", detail: "Avusturya · Uluslararası gala gösterisi" },
-  { name: "Atatürk Kültür Merkezi", detail: "İzmir · Özel Dans Arts gösterisi" },
-  { name: "İzmir Fuarı", detail: "Dünya Mutfakları Gösterisi" },
-  { name: "TDSF Kulüpler Arası Yarışması", detail: "Türkiye 1.liği · 2008" },
+  {
+    name: "Hilton Viyana Balosu",
+    detail: "Avusturya · Uluslararası gala gösterisi",
+    href: youtubeSearch("Hilton Vienna Ball gala dance"),
+  },
+  {
+    name: "Atatürk Kültür Merkezi",
+    detail: "İzmir · Özel Dans Arts gösterisi",
+    href: youtubeSearch("Atatürk Kültür Merkezi İzmir dans gösterisi"),
+  },
+  {
+    name: "İzmir Fuarı",
+    detail: "Dünya Mutfakları Gösterisi",
+    href: youtubeSearch("İzmir Enternasyonal Fuarı dünya mutfakları gösterisi"),
+  },
+  {
+    name: "TDSF Kulüpler Arası Yarışması",
+    detail: "Türkiye 1.liği · 2008",
+    href: youtubeSearch("TDSF kulüpler arası dans yarışması"),
+  },
 ];
 
-const tangoMasters = [
-  "Juan Carlos Copes & Johana Copes",
-  "Sebastian Arce & Mariana Montes",
-  "Julio Balmaceda & Corina Delarosa",
-  "Aurora Lubiz & Jorge Firpo",
-  "Claudia Codega & Estaban Moreno",
-  "Geraldine Rojas & Javier Rodriguez",
+interface Master {
+  name: string;
+  href: string;
+}
+
+const tangoMasters: Master[] = [
+  { name: "Juan Carlos Copes & Johana Copes", href: youtubeSearch("Juan Carlos Copes tango") },
+  { name: "Sebastian Arce & Mariana Montes", href: youtubeSearch("Sebastian Arce Mariana Montes tango") },
+  { name: "Julio Balmaceda & Corina Delarosa", href: youtubeSearch("Julio Balmaceda Corina de la Rosa tango") },
+  { name: "Aurora Lubiz & Jorge Firpo", href: youtubeSearch("Aurora Lubiz Jorge Firpo tango") },
+  { name: "Claudia Codega & Estaban Moreno", href: youtubeSearch("Claudia Codega Esteban Moreno tango") },
+  { name: "Geraldine Rojas & Javier Rodriguez", href: youtubeSearch("Geraldine Rojas Javier Rodriguez tango") },
 ];
 
-const latinMasters = [
-  "Luis Vazques & Melissa Fernandes",
-  "Super Mario",
-  "Tropical Gem",
-  "Susana Montero",
-  "Raymond Brown",
+const latinMasters: Master[] = [
+  { name: "Luis Vazques & Melissa Fernandes", href: youtubeSearch("Luis Vazquez Melissa Fernandez salsa") },
+  { name: "Super Mario", href: youtubeSearch("Super Mario salsa dancer") },
+  { name: "Tropical Gem", href: youtubeSearch("Tropical Gem salsa team") },
+  { name: "Susana Montero", href: youtubeSearch("Susana Montero salsa cubana") },
+  { name: "Raymond Brown", href: youtubeSearch("Raymond Brown ballroom dancer") },
 ];
 
 /**
@@ -147,20 +178,33 @@ export default function InternationalVision() {
                   ease: easing,
                   delay: 0.1 + i * 0.08,
                 }}
-                className="group grid grid-cols-12 gap-4 py-6 md:py-7 transition-colors duration-700 hover:bg-surface/50 px-2 md:px-4 -mx-2 md:-mx-4"
               >
-                <span className="col-span-2 md:col-span-1 serif italic text-accent/70 text-lg md:text-xl font-light">
-                  {f.index}
-                </span>
-                <span className="col-span-10 md:col-span-6 serif text-text text-lg md:text-2xl font-light tracking-tight transition-colors group-hover:text-accent">
-                  {f.name}
-                </span>
-                <span className="col-span-7 md:col-span-3 text-text/65 text-xs md:text-sm font-light tracking-wide self-center">
-                  {f.city}
-                </span>
-                <span className="col-span-5 md:col-span-2 text-accent/75 text-xs md:text-sm font-light tracking-editorial self-center text-right">
-                  {f.year}
-                </span>
+                <a
+                  href={f.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${f.name} — YouTube'da izle`}
+                  className="group grid grid-cols-12 gap-4 py-6 md:py-7 transition-colors duration-700 hover:bg-surface/50 px-2 md:px-4 -mx-2 md:-mx-4"
+                >
+                  <span className="col-span-2 md:col-span-1 serif italic text-accent/70 text-lg md:text-xl font-light">
+                    {f.index}
+                  </span>
+                  <span className="col-span-10 md:col-span-6 serif text-text text-lg md:text-2xl font-light tracking-tight transition-colors group-hover:text-accent flex items-center gap-2">
+                    <span>{f.name}</span>
+                    <ArrowUpRight
+                      size={14}
+                      strokeWidth={1.25}
+                      className="text-accent/0 transition-all duration-700 group-hover:text-accent group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span className="col-span-7 md:col-span-3 text-text/65 text-xs md:text-sm font-light tracking-wide self-center">
+                    {f.city}
+                  </span>
+                  <span className="col-span-5 md:col-span-2 text-accent/75 text-xs md:text-sm font-light tracking-editorial self-center text-right">
+                    {f.year}
+                  </span>
+                </a>
               </motion.li>
             ))}
           </ul>
@@ -193,12 +237,7 @@ export default function InternationalVision() {
               </p>
               <ul className="space-y-3">
                 {tangoMasters.map((m) => (
-                  <li
-                    key={m}
-                    className="serif italic text-text/85 text-base md:text-lg font-light leading-snug"
-                  >
-                    {m}
-                  </li>
+                  <MasterLink key={m.name} master={m} />
                 ))}
               </ul>
             </motion.div>
@@ -215,12 +254,7 @@ export default function InternationalVision() {
               </p>
               <ul className="space-y-3">
                 {latinMasters.map((m) => (
-                  <li
-                    key={m}
-                    className="serif italic text-text/85 text-base md:text-lg font-light leading-snug"
-                  >
-                    {m}
-                  </li>
+                  <MasterLink key={m.name} master={m} />
                 ))}
               </ul>
             </motion.div>
@@ -253,19 +287,56 @@ export default function InternationalVision() {
                   ease: easing,
                   delay: 0.1 + i * 0.07,
                 }}
-                className="group relative pl-6 border-l border-line/80 hover:border-accent/60 transition-colors duration-700"
               >
-                <p className="serif text-text text-xl md:text-2xl font-light tracking-tight transition-colors group-hover:text-accent">
-                  {s.name}
-                </p>
-                <p className="mt-2 text-text/60 text-sm font-light tracking-wide">
-                  {s.detail}
-                </p>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${s.name} — YouTube'da izle`}
+                  className="group relative block pl-6 border-l border-line/80 hover:border-accent/60 transition-colors duration-700"
+                >
+                  <p className="serif text-text text-xl md:text-2xl font-light tracking-tight transition-colors group-hover:text-accent flex items-center gap-2">
+                    <span>{s.name}</span>
+                    <ArrowUpRight
+                      size={14}
+                      strokeWidth={1.25}
+                      className="text-accent/0 transition-all duration-700 group-hover:text-accent group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </p>
+                  <p className="mt-2 text-text/60 text-sm font-light tracking-wide">
+                    {s.detail}
+                  </p>
+                </a>
               </motion.div>
             ))}
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function MasterLink({ master }: { master: Master }) {
+  return (
+    <li>
+      <a
+        href={master.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${master.name} — YouTube'da izle`}
+        className="group inline-flex items-center gap-2 serif italic text-text/85 text-base md:text-lg font-light leading-snug transition-colors duration-700 hover:text-accent"
+      >
+        <span className="border-b border-transparent group-hover:border-accent/60 transition-colors duration-700">
+          {master.name}
+        </span>
+        <ArrowUpRight
+          size={13}
+          strokeWidth={1.25}
+          className="text-accent/0 transition-all duration-700 group-hover:text-accent group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          aria-hidden="true"
+        />
+      </a>
+    </li>
   );
 }

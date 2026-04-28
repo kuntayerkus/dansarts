@@ -1,19 +1,10 @@
 import { Instagram, Mail } from "lucide-react";
 
-const team = [
-  { name: "Reyhan Şafak", role: "Kurucu & Baş Eğitmen" },
-  { name: "Uğur Şafak", role: "Sahne Partneri" },
-  { name: "Kuntay", role: "Dijital & İçerik" },
-  { name: "Seçkin", role: "Post-Prod & Ses Tasarımı" },
-  { name: "Deniz", role: "Operasyon Asistanı" },
-];
-
 const navLinks = [
   { href: "#oncu", label: "Öncü" },
   { href: "#vizyon", label: "Uluslararası Vizyon" },
   { href: "#sahne", label: "Sahne · Repertuvar" },
   { href: "#deneyim", label: "Boutique Experiences" },
-  { href: "#partnerlik", label: "Partnerlik" },
   { href: "#basvuru", label: "Başvuru" },
 ];
 
@@ -37,14 +28,14 @@ export default function Footer() {
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-10 items-start">
           {/* Brand */}
-          <div className="md:col-span-4">
+          <div className="md:col-span-6">
             <p className="serif text-accent text-2xl tracking-editorial">
               DANS&nbsp;ARTS
             </p>
             <p className="mt-3 text-[10px] uppercase tracking-whisper text-text/55">
               İzmir · 1995'ten Bu Yana
             </p>
-            <p className="mt-6 text-text/70 text-sm font-light leading-[1.85] max-w-sm">
+            <p className="mt-6 text-text/70 text-sm font-light leading-[1.85] max-w-md">
               Türkiye Dans Sporları Federasyonu tescilli bir ustanın imzasıyla,
               İzmir'in seçkin sahnelerinde butik dans deneyimi.
             </p>
@@ -78,7 +69,7 @@ export default function Footer() {
           </div>
 
           {/* Navigation */}
-          <div className="md:col-span-3">
+          <div className="md:col-span-3 md:col-start-8">
             <p className="text-[10px] uppercase tracking-whisper text-accent/70 mb-5">
               Bölümler
             </p>
@@ -96,25 +87,30 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Team */}
-          <div className="md:col-span-5">
+          {/* Heritage stat */}
+          <div className="md:col-span-3">
             <p className="text-[10px] uppercase tracking-whisper text-accent/70 mb-5">
-              Ekip
+              Miras
             </p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
-              {team.map((m) => (
-                <li
-                  key={m.name}
-                  className="flex flex-col gap-0.5 border-l border-line/80 pl-4 hover:border-accent/60 transition-colors duration-700"
-                >
-                  <span className="serif text-text text-base font-light tracking-tight">
-                    {m.name}
-                  </span>
-                  <span className="text-[10px] uppercase tracking-whisper text-text/50">
-                    {m.role}
-                  </span>
-                </li>
-              ))}
+            <ul className="flex flex-col gap-4 text-sm font-light">
+              <li className="flex flex-col">
+                <span className="serif text-accent text-2xl leading-none">10.000+</span>
+                <span className="mt-1 text-[10px] uppercase tracking-whisper text-text/50">
+                  Öğrenci
+                </span>
+              </li>
+              <li className="flex flex-col">
+                <span className="serif text-accent text-2xl leading-none">32 Yıl</span>
+                <span className="mt-1 text-[10px] uppercase tracking-whisper text-text/50">
+                  Tecrübe
+                </span>
+              </li>
+              <li className="flex flex-col">
+                <span className="serif text-accent text-2xl leading-none">TDSF</span>
+                <span className="mt-1 text-[10px] uppercase tracking-whisper text-text/50">
+                  2. Kademe Antrenör
+                </span>
+              </li>
             </ul>
           </div>
         </div>
@@ -126,7 +122,7 @@ export default function Footer() {
             © 2026 Dans Arts · İzmir · Tüm hakları saklıdır
           </p>
           <p className="text-[10px] uppercase tracking-whisper text-text/40">
-            TDSF 2. Kademe Antrenör · Reyhan Şafak
+            Reyhan Şafak · Kurucu &amp; Baş Eğitmen
           </p>
         </div>
       </div>

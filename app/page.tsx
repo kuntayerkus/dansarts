@@ -5,7 +5,6 @@ import InternationalVision from "@/components/InternationalVision";
 import PressMarquee from "@/components/PressMarquee";
 import Repertoire from "@/components/Repertoire";
 import BoutiqueExperiences from "@/components/BoutiqueExperiences";
-import Partnership from "@/components/Partnership";
 import Application from "@/components/Application";
 import Footer from "@/components/Footer";
 import IntroLoader from "@/components/IntroLoader";
@@ -26,7 +25,6 @@ export default function HomePage() {
         <PressMarquee />
         <Repertoire />
         <BoutiqueExperiences />
-        <Partnership />
         <Application />
         <Footer />
       </main>

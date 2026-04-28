@@ -63,9 +63,6 @@ export default function Hero() {
                 transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
                 className="hidden md:flex items-center gap-9 text-[11px] uppercase tracking-whisper text-text/70"
               >
-                <a href="#manifesto" className="hover:text-accent transition-colors">
-                  Manifesto
-                </a>
                 <a href="#oncu" className="hover:text-accent transition-colors">
                   Öncü
                 </a>
@@ -75,8 +72,8 @@ export default function Hero() {
                 <a href="#sahne" className="hover:text-accent transition-colors">
                   Sahne
                 </a>
-                <a href="#partnerlik" className="hover:text-accent transition-colors">
-                  Partnerlik
+                <a href="#deneyim" className="hover:text-accent transition-colors">
+                  Deneyim
                 </a>
                 <a
                   href="#basvuru"

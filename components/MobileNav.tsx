@@ -7,12 +7,10 @@ import { Menu, X } from "lucide-react";
 const easing = [0.16, 1, 0.3, 1] as const;
 
 const links = [
-  { href: "#manifesto", label: "Manifesto" },
   { href: "#oncu", label: "Öncü" },
   { href: "#vizyon", label: "Uluslararası Vizyon" },
   { href: "#sahne", label: "Sahne · Repertuvar" },
   { href: "#deneyim", label: "Boutique Experiences" },
-  { href: "#partnerlik", label: "Partnerlik" },
   { href: "#basvuru", label: "Başvuru" },
 ];
 

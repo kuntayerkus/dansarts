@@ -8,7 +8,6 @@ const sections = [
   { id: "vizyon", label: "Vizyon" },
   { id: "sahne", label: "Sahne" },
   { id: "deneyim", label: "Deneyim" },
-  { id: "partnerlik", label: "Partnerlik" },
   { id: "basvuru", label: "Başvuru" },
 ];
 
