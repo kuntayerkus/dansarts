@@ -17,15 +17,21 @@ export default function Atmosphere() {
       scrollLength={3.5}
       vignette={0.7}
     >
-      {({ ready, progress }) => {
+      {({ ready, progress, isStatic }) => {
         const fadeIn = (start: number, end: number) =>
           Math.max(0, Math.min(1, (progress - start) / (end - start)));
         const fadeOut = (start: number, end: number) =>
           1 - Math.max(0, Math.min(1, (progress - start) / (end - start)));
 
-        const headlineOpacity = fadeIn(0.05, 0.2) * fadeOut(0.55, 0.75);
-        const subOpacity = fadeIn(0.15, 0.3) * fadeOut(0.6, 0.8);
-        const closingOpacity = fadeIn(0.7, 0.85);
+        // In static mode every layer paints at once — no scroll to drive
+        // the choreography, so we override the masks with full opacity.
+        const headlineOpacity = isStatic
+          ? 1
+          : fadeIn(0.05, 0.2) * fadeOut(0.55, 0.75);
+        const subOpacity = isStatic
+          ? 1
+          : fadeIn(0.15, 0.3) * fadeOut(0.6, 0.8);
+        const closingOpacity = isStatic ? 1 : fadeIn(0.7, 0.85);
 
         return (
           <>

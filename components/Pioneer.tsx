@@ -14,9 +14,9 @@ interface TimelineEntry {
 
 const timeline: TimelineEntry[] = [
   {
-    year: "1994",
+    year: "1995",
     title: "Crawley · İngiltere",
-    copy: "Avalon School ve The English Academy. Brian & Sylvia Wood, Crise & Raymond Brown gözetiminde iki buçuk yıllık yoğun teknik eğitim.",
+    copy: "Avalon School ve The English Academy. Brian & Sylvia Wood, Crise & Raymond Brown gözetiminde iki buçuk yıllık yoğun teknik eğitim — kariyerin başlangıcı.",
   },
   {
     year: "1999",
@@ -104,7 +104,7 @@ export default function Pioneer() {
 
             <WordReveal
               as="p"
-              text="İzmir'in köklü dans kültürünün yapı taşlarından biri. 1994'ten bu yana 32 yılı aşan tecrübesi ve uluslararası vizyonuyla, Türkiye Dans Sporları Federasyonu 2. Kademe Antrenör unvanını taşıyan sayılı dans ustalarından. Kariyeri boyunca on binden fazla öğrenciye dans eğitimi verdi; Ballroom, Sportif Latin, Sosyal Latin ve Arjantin Tango branşlarında derin bir uzmanlık geliştirdi."
+              text="İzmir'in köklü dans kültürünün yapı taşlarından biri. 1995'ten bu yana 32 yılı aşan tecrübesi ve uluslararası vizyonuyla, Türkiye Dans Sporları Federasyonu 2. Kademe Antrenör unvanını taşıyan sayılı dans ustalarından. Kariyeri boyunca on binden fazla öğrenciye dans eğitimi verdi; Ballroom, Sportif Latin, Sosyal Latin ve Arjantin Tango branşlarında derin bir uzmanlık geliştirdi."
               stagger={0.022}
               delay={0.4}
               className="mt-10 md:mt-14 max-w-xl text-text/85 text-base md:text-lg font-light leading-[1.85]"
@@ -145,7 +145,7 @@ export default function Pioneer() {
               className="relative aspect-[3/4] w-full max-w-md mx-auto md:ml-auto md:mr-0 bg-surface border border-line/60 overflow-hidden"
             >
               <Image
-                src="/assets/REYHANHERO.png"
+                src="/assets/REYHANHERO.webp"
                 alt="Reyhan Şafak — TDSF 2. Kademe Antrenör portresi"
                 fill
                 sizes="(min-width: 768px) 32rem, 100vw"
@@ -160,16 +160,16 @@ export default function Pioneer() {
 
               <figcaption className="absolute inset-x-0 top-0 p-6 flex items-center justify-between">
                 <span className="text-[10px] uppercase tracking-whisper text-accent/80">
-                  Sahne 01
+                  Portre
                 </span>
                 <span className="text-[10px] uppercase tracking-whisper text-text/55">
-                  İzmir 2026
+                  İzmir · 2026
                 </span>
               </figcaption>
 
               <div className="absolute inset-x-0 bottom-0 p-6">
                 <span className="text-[10px] uppercase tracking-whisper text-accent/80">
-                  Reyhan Şafak · Portre
+                  Reyhan Şafak
                 </span>
               </div>
 
@@ -240,7 +240,7 @@ export default function Pioneer() {
           <div className="flex items-center gap-3 mb-12 md:mb-16">
             <span className="block h-px w-8 bg-accent/60" />
             <span className="text-[10px] uppercase tracking-whisper text-accent/70">
-              Yolculuk · 1994 → Bugün
+              Yolculuk · 1995 → Bugün
             </span>
           </div>
 

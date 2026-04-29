@@ -29,3 +29,19 @@ next-env.d.ts
 
 # claude code local settings
 .claude/settings.local.json
+
+# playwright MCP test artifacts (local only)
+.playwright-mcp/
+/01-*.png
+/02-*.png
+/03-*.png
+/04-*.png
+/05-*.png
+/06-*.png
+/07-*.png
+/08-*.png
+/09-*.png
+/1?-*.png
+/m0?-*.png
+/verify-*.png
+/final-*.png

@@ -2,6 +2,7 @@
 
 import { ReactNode, useRef } from "react";
 import useVideoScrub from "@/hooks/useVideoScrub";
+import useExperienceTier from "@/hooks/useExperienceTier";
 
 interface ScrubSceneProps {
   /** Absolute public path to the MP4. Must be encoded with -g 1 for frame-accurate seek. */
@@ -14,8 +15,18 @@ interface ScrubSceneProps {
   scrollLength?: number;
   /** Vignette opacity (0..1). */
   vignette?: number;
-  /** Render-prop for layered editorial copy. */
-  children?: (state: { ready: boolean; progress: number }) => ReactNode;
+  /**
+   * Render-prop for layered editorial copy.
+   * `isStatic` is `true` on slow connections / reduce-motion users — the
+   * video and scrub are skipped, only the poster paints. Render-props
+   * should treat that as "show every layer at full opacity" rather than
+   * stitching reveals to the (frozen) progress value.
+   */
+  children?: (state: {
+    ready: boolean;
+    progress: number;
+    isStatic: boolean;
+  }) => ReactNode;
   id?: string;
   className?: string;
 }
@@ -26,6 +37,11 @@ interface ScrubSceneProps {
  * 100vh sticky video inside a tall section. One hardware-decoded MP4
  * scrubbed via `video.currentTime`. Adds cinematic motion blur on
  * fast scroll. Mobile uses the same source — `object-fit: cover` crops.
+ *
+ * On slow connections / reduce-motion / save-data users we skip the video
+ * entirely (saving 5–6 MB per scene) and render the poster as a static
+ * still in a normal-flow 100vh section. Editorial copy still layers on
+ * top via the render-prop.
  */
 export default function ScrubScene({
   src,
@@ -37,13 +53,56 @@ export default function ScrubScene({
   id,
   className = "",
 }: ScrubSceneProps) {
+  const tier = useExperienceTier();
+  const isStatic = tier !== "full";
+
+  if (isStatic) {
+    return (
+      <StaticScene
+        id={id}
+        poster={poster}
+        vignette={vignette}
+        className={className}
+      >
+        {children}
+      </StaticScene>
+    );
+  }
+
+  return (
+    <ScrubSceneVideo
+      id={id}
+      src={src}
+      poster={poster}
+      eager={eager}
+      scrollLength={scrollLength}
+      vignette={vignette}
+      className={className}
+    >
+      {children}
+    </ScrubSceneVideo>
+  );
+}
+
+// ---- Full experience: video + scroll-scrub ---------------------------------
+
+function ScrubSceneVideo({
+  id,
+  src,
+  poster,
+  eager,
+  scrollLength,
+  vignette,
+  className,
+  children,
+}: Omit<ScrubSceneProps, "src"> & { src: string }) {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const { ready, progress, velocity } = useVideoScrub({
     sectionRef,
     videoRef,
-    eager,
+    eager: !!eager,
   });
 
   // Cap at 2.4px so it stays editorial, not soap-opera
@@ -53,8 +112,8 @@ export default function ScrubScene({
     <section
       id={id}
       ref={sectionRef}
-      className={`relative w-full ${className}`}
-      style={{ height: `${scrollLength * 100}vh` }}
+      className={`relative w-full ${className ?? ""}`}
+      style={{ height: `${(scrollLength ?? 3) * 100}vh` }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
         {/* Single hardware-decoded source. Encode -g 1 for frame-accurate seek. */}
@@ -86,7 +145,7 @@ export default function ScrubScene({
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
           style={{
-            background: `radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,${vignette}) 100%)`,
+            background: `radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,${vignette ?? 0.55}) 100%)`,
           }}
         />
 
@@ -94,11 +153,62 @@ export default function ScrubScene({
         {children && (
           <div className="relative z-10 h-full w-full pointer-events-none">
             <div className="pointer-events-auto h-full w-full">
-              {children({ ready, progress })}
+              {children({ ready, progress, isStatic: false })}
             </div>
           </div>
         )}
       </div>
+    </section>
+  );
+}
+
+// ---- Soft / still tier: poster only, single 100vh, no scrub ----------------
+
+function StaticScene({
+  id,
+  poster,
+  vignette,
+  className,
+  children,
+}: {
+  id?: string;
+  poster?: string;
+  vignette?: number;
+  className?: string;
+  children?: ScrubSceneProps["children"];
+}) {
+  return (
+    <section
+      id={id}
+      className={`relative w-full h-screen overflow-hidden bg-background ${className ?? ""}`}
+    >
+      {poster && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={poster}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      )}
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: `radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,${vignette ?? 0.55}) 100%)`,
+        }}
+      />
+
+      {children && (
+        <div className="relative z-10 h-full w-full pointer-events-none">
+          <div className="pointer-events-auto h-full w-full">
+            {children({ ready: true, progress: 0, isStatic: true })}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

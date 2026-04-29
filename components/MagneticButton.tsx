@@ -6,6 +6,7 @@ import {
   useEffect,
   useRef,
 } from "react";
+import useExperienceTier from "@/hooks/useExperienceTier";
 
 interface MagneticButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
@@ -31,15 +32,17 @@ export default function MagneticButton({
   ...rest
 }: MagneticButtonProps) {
   const ref = useRef<HTMLButtonElement | HTMLAnchorElement | null>(null);
+  const tier = useExperienceTier();
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Decorative: only attach the magnetic effect on the full tier.
+    // Reduced-motion + Save-Data + 3G already short-circuit via useExperienceTier.
+    if (tier !== "full") return;
     const fine =
       window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)")
-      .matches;
-    if (!fine || reduce) return;
+    if (!fine) return;
 
     let raf = 0;
     let tx = 0;
@@ -86,7 +89,7 @@ export default function MagneticButton({
       if (raf) cancelAnimationFrame(raf);
       node.style.transform = "";
     };
-  }, [strength]);
+  }, [strength, tier]);
 
   const sharedProps = {
     "data-magnetic": "true",

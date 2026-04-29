@@ -19,9 +19,9 @@ export default function Footer() {
             Kapanış
           </p>
           <p className="serif italic font-light text-text/85 text-2xl md:text-4xl leading-snug tracking-tight">
-            “Stüdyomuz yok. Sahnemiz var.
+            “Sahnemiz her yer. Her akşam yeniden.
             <br />
-            Ve adı <span className="not-italic gold-shimmer animate-shimmer">İzmir.</span>”
+            Ve adı <span className="not-italic text-accent">İzmir.</span>”
           </p>
         </div>
 

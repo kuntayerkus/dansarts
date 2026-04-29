@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import useExperienceTier from "@/hooks/useExperienceTier";
 
 const easing = [0.16, 1, 0.3, 1] as const;
 const STORAGE_KEY = "dansarts_intro_seen";
@@ -17,9 +18,16 @@ const DURATION_MS = 2200;
  */
 export default function IntroLoader() {
   const [show, setShow] = useState<boolean | null>(null);
+  const tier = useExperienceTier();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    // On the slowest tier we skip the loader entirely — those users have
+    // already waited enough for HTML to arrive; no need for a 2.2s curtain.
+    if (tier === "still") {
+      setShow(false);
+      return;
+    }
     let alreadySeen = false;
     try {
       alreadySeen = window.sessionStorage.getItem(STORAGE_KEY) === "1";
@@ -35,7 +43,8 @@ export default function IntroLoader() {
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    const total = reduceMotion ? 600 : DURATION_MS;
+    const total =
+      reduceMotion || tier === "soft" ? 700 : DURATION_MS;
 
     const lenis = window.__lenis;
     lenis?.stop();
@@ -58,7 +67,7 @@ export default function IntroLoader() {
       document.body.style.overflow = prevOverflow;
       lenis?.start();
     };
-  }, []);
+  }, [tier]);
 
   return (
     <AnimatePresence>

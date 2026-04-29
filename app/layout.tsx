@@ -18,7 +18,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "DANS ARTS · Stüdyomuz Yok. Sahnemiz Var. — Reyhan Şafak · İzmir",
+  title:
+    "DANS ARTS · Sahnemiz Her Yer. Her Akşam Yeniden. — Reyhan Şafak · İzmir",
   description:
     "Türkiye Dans Sporları Federasyonu tescilli 2. Kademe Antrenör Reyhan Şafak öncülüğünde, İzmir'in lüks otellerinde ve butik mekanlarında yaşanan davete açık dans deneyimi. 1995'ten bu yana, 32 yıllık tecrübe.",
   keywords: [
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://dansarts.com"),
   alternates: { canonical: "/" },
   openGraph: {
-    title: "DANS ARTS · Stüdyomuz Yok. Sahnemiz Var.",
+    title: "DANS ARTS · Sahnemiz Her Yer. Her Akşam Yeniden.",
     description:
       "Reyhan Şafak imzasıyla, İzmir'in seçkin sahnelerinde butik dans deneyimi. 1995'ten bu yana.",
     type: "website",
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DANS ARTS · Stüdyomuz Yok. Sahnemiz Var.",
+    title: "DANS ARTS · Sahnemiz Her Yer. Her Akşam Yeniden.",
     description:
       "Reyhan Şafak imzasıyla İzmir'in seçkin sahnelerinde butik dans deneyimi.",
   },
@@ -66,6 +67,77 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
+// JSON-LD structured data — gives Google enough context to render rich
+// brand/person panels and stitch Dans Arts into the Knowledge Graph as a
+// professional service rather than a generic listing.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://dansarts.com/#organization",
+      name: "Dans Arts",
+      alternateName: "DANS ARTS",
+      description:
+        "Reyhan Şafak imzasıyla, İzmir'in seçkin sahnelerinde davete açık butik dans deneyimi. Sportif Latin, Ballroom ve Sosyal Danslar.",
+      url: "https://dansarts.com",
+      logo: "https://dansarts.com/icon.svg",
+      image: "https://dansarts.com/opengraph-image",
+      slogan: "Sahnemiz Her Yer. Her Akşam Yeniden.",
+      foundingDate: "1995",
+      founder: { "@id": "https://dansarts.com/#reyhan" },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "İzmir",
+        addressCountry: "TR",
+      },
+      areaServed: { "@type": "City", name: "İzmir" },
+      sameAs: ["https://instagram.com/dansartsreyhan"],
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        email: "dansartsreyhan@gmail.com",
+        availableLanguage: ["Turkish", "English"],
+      },
+    },
+    {
+      "@type": "Person",
+      "@id": "https://dansarts.com/#reyhan",
+      name: "Reyhan Şafak",
+      jobTitle: "Kurucu & Baş Eğitmen · TDSF 2. Kademe Antrenör",
+      gender: "Female",
+      nationality: "Turkish",
+      worksFor: { "@id": "https://dansarts.com/#organization" },
+      alumniOf: [
+        { "@type": "Organization", name: "Avalon School · Crawley" },
+        { "@type": "Organization", name: "The English Academy · Crawley" },
+        { "@type": "Organization", name: "Ege Konservatuarı · İzmir" },
+        { "@type": "Organization", name: "Anadolu Üniversitesi" },
+      ],
+      hasCredential: [
+        "TDSF 2. Kademe Antrenörlük Belgesi",
+        "TDSF Türkiye 1.liği · 2008",
+      ],
+      knowsAbout: [
+        "Sportif Latin",
+        "Ballroom",
+        "Arjantin Tango",
+        "Salsa",
+        "Bachata",
+        "Düğün koreografisi",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://dansarts.com/#website",
+      url: "https://dansarts.com",
+      name: "Dans Arts",
+      inLanguage: "tr-TR",
+      publisher: { "@id": "https://dansarts.com/#organization" },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -73,6 +145,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr" className={`${cinzel.variable} ${inter.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          // Single, minified JSON; React strips whitespace anyway. Safe content
+          // (no user input) so JSON.stringify is sufficient — no escaping needed.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="bg-background text-text antialiased overflow-x-hidden">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>

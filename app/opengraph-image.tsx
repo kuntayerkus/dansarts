@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "DANS ARTS · Stüdyomuz Yok. Sahnemiz Var.";
+export const alt = "DANS ARTS · Sahnemiz Her Yer. Her Akşam Yeniden.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -36,27 +36,25 @@ export default async function OpengraphImage() {
 
         <div
           style={{
-            fontSize: 92,
+            fontSize: 88,
             lineHeight: 1.04,
             textAlign: "center",
             fontWeight: 400,
             letterSpacing: -1,
           }}
         >
-          Stüdyomuz Yok.
+          Sahnemiz <span style={{ color: "#D4AF37", fontStyle: "italic" }}>Her Yer.</span>
         </div>
         <div
           style={{
-            fontSize: 92,
+            fontSize: 88,
             lineHeight: 1.04,
             textAlign: "center",
             fontWeight: 400,
             letterSpacing: -1,
-            color: "#D4AF37",
-            fontStyle: "italic",
           }}
         >
-          Sahnemiz Var.
+          Her Akşam <span style={{ color: "#D4AF37", fontStyle: "italic" }}>Yeniden.</span>
         </div>
 
         <div

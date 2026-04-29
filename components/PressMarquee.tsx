@@ -36,7 +36,7 @@ export default function PressMarquee() {
         >
           <span className="block h-px w-8 bg-accent/60" />
           <span className="text-[10px] uppercase tracking-whisper text-accent/70">
-            Sahnedeki İmzalar · 1994 → Bugün
+            Sahnedeki İmzalar · 1995 → Bugün
           </span>
         </motion.div>
 
@@ -51,8 +51,10 @@ export default function PressMarquee() {
         </motion.span>
       </div>
 
-      <div className="relative">
-        <div className="flex w-max animate-marquee whitespace-nowrap will-change-transform">
+      <div className="group/marquee relative">
+        <div
+          className="flex w-max animate-marquee whitespace-nowrap will-change-transform group-hover/marquee:[animation-play-state:paused]"
+        >
           {[...items, ...items].map((label, i) => (
             <span
               key={`${label}-${i}`}

@@ -74,13 +74,18 @@ const eventFields: FieldDef[] = [
     name: "audience",
     label: "Kitle Büyüklüğü",
     type: "select",
-    options: ["50–", "50–150", "150–500", "500+"],
+    options: ["50 ve altı", "50–150", "150–500", "500+"],
   },
   {
     name: "budget",
     label: "Bütçe Aralığı (opsiyonel)",
     type: "select",
-    options: ["Belirtmek istemiyorum", "Düşük", "Orta", "Üst"],
+    options: [
+      "Belirtmek istemiyorum",
+      "Standart",
+      "Premium",
+      "Ultra Premium",
+    ],
   },
   {
     name: "message",

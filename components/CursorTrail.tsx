@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import useExperienceTier from "@/hooks/useExperienceTier";
 
 /**
  * CursorTrail
@@ -13,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
  * the ring scales up and shifts opacity — a subtle "I see you" beat.
  */
 export default function CursorTrail() {
+  const tier = useExperienceTier();
   const [enabled, setEnabled] = useState(false);
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
@@ -27,13 +29,16 @@ export default function CursorTrail() {
   });
 
   useEffect(() => {
+    // Decorative: only on the full experience tier (4G+, motion allowed).
+    if (tier !== "full") {
+      setEnabled(false);
+      return;
+    }
     const fine =
       window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)")
-      .matches;
-    if (!fine || reduce) return;
+    if (!fine) return;
     setEnabled(true);
-  }, []);
+  }, [tier]);
 
   useEffect(() => {
     if (!enabled) return;

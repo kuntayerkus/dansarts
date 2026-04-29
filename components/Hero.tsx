@@ -8,8 +8,8 @@ import MobileNav from "./MobileNav";
 /**
  * Hero — "The Manifesto"
  * - Girl scene with cinematic dark veil that lifts on scroll.
- * - Manifesto headline anchored in the venue-partnership thesis:
- *   "Stüdyomuz Yok. Sahnemiz Var."
+ * - Manifesto headline anchored in the venue-rotation thesis:
+ *   "Sahnemiz Her Yer. Her Akşam Yeniden."
  */
 export default function Hero() {
   return (
@@ -21,14 +21,21 @@ export default function Hero() {
       scrollLength={3.5}
       vignette={0.6}
     >
-      {({ ready, progress }) => {
-        const veilOpacity = Math.max(0, Math.min(1, 1 - progress / 0.18));
+      {({ ready, progress, isStatic }) => {
+        // In static mode (slow connection / reduced-motion) the section is a
+        // single 100vh frame: keep the veil fully lifted and the title fully
+        // visible without any scroll-progress math.
+        const veilOpacity = isStatic
+          ? 0
+          : Math.max(0, Math.min(1, 1 - progress / 0.18));
         // Manifesto headline must be at full opacity on landing — it's the
         // brand statement. We only fade it OUT as the user scrolls past 0.55.
-        const titleOpacity = Math.max(
-          0,
-          Math.min(1, progress > 0.55 ? 1 - (progress - 0.55) / 0.2 : 1)
-        );
+        const titleOpacity = isStatic
+          ? 1
+          : Math.max(
+              0,
+              Math.min(1, progress > 0.55 ? 1 - (progress - 0.55) / 0.2 : 1)
+            );
 
         return (
           <>
@@ -98,9 +105,11 @@ export default function Hero() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: ready ? 1 : 0, y: ready ? 0 : 12 }}
                   transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
-                  className="text-[10px] md:text-[11px] uppercase tracking-whisper text-accent/80 mb-6 md:mb-8"
+                  className="mb-6 md:mb-8 flex flex-col items-center gap-1.5 text-[10px] md:text-[11px] uppercase tracking-whisper text-accent/80"
                 >
-                  Reyhan Şafak · TDSF 2. Kademe Antrenör
+                  <span>Reyhan Şafak</span>
+                  <span className="block h-px w-6 bg-accent/40" aria-hidden="true" />
+                  <span className="text-text/65">TDSF 2. Kademe Antrenör</span>
                 </motion.p>
 
                 <motion.h1
@@ -110,10 +119,10 @@ export default function Hero() {
                   className="serif font-light leading-[1.02] text-text"
                 >
                   <span className="block text-[42px] md:text-7xl lg:text-[96px] tracking-tight">
-                    Stüdyomuz Yok.
+                    Sahnemiz <em className="not-italic gold-shimmer animate-shimmer">Her Yer.</em>
                   </span>
                   <span className="block text-[42px] md:text-7xl lg:text-[96px] mt-2 tracking-tight">
-                    <em className="not-italic gold-shimmer animate-shimmer">Sahnemiz</em> Var.
+                    Her Akşam <em className="not-italic gold-shimmer animate-shimmer">Yeniden.</em>
                   </span>
                 </motion.h1>
 
@@ -133,9 +142,10 @@ export default function Hero() {
                   transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 1.6 }}
                   className="text-sm md:text-base font-light text-text/75 max-w-xl mx-auto leading-relaxed"
                 >
-                  Türkiye Dans Sporları Federasyonu tescilli bir ustanın imzasıyla;
-                  İzmir'in lüks otellerinde, butik şarap evlerinde ve roof-top
-                  sahnelerinde yaşanan davete açık bir dans deneyimi.
+                  Türkiye Dans Sporları Federasyonu tescilli bir ustanın imzası.
+                  <br className="hidden md:block" /> İzmir'in lüks otellerinde,
+                  butik şarap evlerinde ve roof-top sahnelerinde davete açık bir
+                  dans deneyimi.
                 </motion.p>
 
                 {/* Heritage stat row */}
@@ -154,7 +164,7 @@ export default function Hero() {
               </div>
             </div>
 
-            <ScrollIndicator visible={ready && progress < 0.08} />
+            {!isStatic && <ScrollIndicator visible={ready && progress < 0.08} />}
           </>
         );
       }}
